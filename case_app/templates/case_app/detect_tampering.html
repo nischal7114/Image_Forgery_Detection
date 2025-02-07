@@ -1,0 +1,99 @@
+{% extends "case_app/base.html" %}
+
+{% block title %}Tampering Detection{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <!-- Header Section -->
+    <div class="text-center bg-gradient bg-warning text-dark py-4 rounded shadow-sm">
+        <h1><i class="bi bi-shield-check"></i> Detect Tampering</h1>
+        <p>Compare the uploaded image against the original stored image.</p>
+    </div>
+
+    <!-- Upload Form Section -->
+    <div class="mt-4 bg-white p-4 rounded shadow-sm">
+        <h3><i class="bi bi-upload"></i> Upload an Image</h3>
+        <p>Please upload an image to check if it matches the original or has been tampered with.</p>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="uploaded_image" class="form-label">Select Image:</label>
+                <input type="file" name="uploaded_image" id="uploaded_image" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-search"></i> Analyze
+            </button>
+        </form>
+        {% if error %}
+        <div class="alert alert-danger mt-3">
+            <i class="bi bi-exclamation-triangle"></i> {{ error }}
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Analysis Results Section -->
+    {% if stored_phash and uploaded_phash %}
+    <div class="mt-4 bg-white p-4 rounded shadow-sm">
+        <h3><i class="bi bi-clipboard-data"></i> Analysis Results</h3>
+        <div class="row">
+            <!-- Summary -->
+            <div class="col-md-6">
+                <p><strong>Stored Hash:</strong> {{ stored_phash }}</p>
+                <p><strong>Uploaded Hash:</strong> {{ uploaded_phash }}</p>
+                <p><strong>Hamming Distance:</strong> <span class="badge bg-info">{{ hamming_distance }}</span></p>
+                <p><strong>Similarity:</strong> 
+                    <span class="badge {% if similarity == 100 %}bg-success{% else %}bg-warning{% endif %}">
+                        {{ similarity }}%
+                    </span>
+                </p>
+                <p><strong>Threshold:</strong> {{ threshold }}</p>
+                <p><strong>Status:</strong> 
+                    {% if tampered %}
+                        <span class="badge bg-danger"><i class="bi bi-exclamation-triangle"></i> Tampered</span>
+                    {% else %}
+                        <span class="badge bg-success"><i class="bi bi-check-circle"></i> Original</span>
+                    {% endif %}
+                </p>
+            </div>
+
+            <!-- Image Comparison -->
+            <div class="col-md-6">
+                <h5><i class="bi bi-images"></i> Images</h5>
+                <div class="d-flex gap-3">
+                    <!-- Stored Image -->
+                    <div class="card" style="width: 12rem;">
+                        <img src="{{ stored_image.image.url }}" class="card-img-top img-thumbnail" alt="Stored Image">
+                        <div class="card-body text-center">
+                            <p class="card-text">Stored Image</p>
+                        </div>
+                    </div>
+
+                    <!-- Uploaded Image -->
+                    <div class="card" style="width: 12rem;">
+                        <img src="{{ uploaded_image_url }}" class="card-img-top img-thumbnail" alt="Uploaded Image">
+                        <div class="card-body text-center">
+                            <p class="card-text">Uploaded Image</p>
+                        </div>
+                    </div>
+
+                    <!-- Difference Image -->
+                    <div class="card" style="width: 12rem;">
+                        <img src="{{ diff_image_url }}" class="card-img-top img-thumbnail" alt="Difference Image">
+                        <div class="card-body text-center">
+                            <p class="card-text">Difference Image</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Back Button -->
+    <div class="mt-4">
+        <a href="{% url 'case_app:case_details' stored_image.case.id %}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Back to Case
+        </a>
+    </div>
+</div>
+{% endblock %}

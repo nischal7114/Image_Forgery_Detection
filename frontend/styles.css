@@ -1,0 +1,82 @@
+/* Root Variables */
+:root {
+    --primary-bg: #1c1c1c; /* Dark background for left section */
+    --secondary-bg: #2c2c2c; /* Input field background */
+    --primary-color: #007bff; /* Right section background */
+    --light-color: #ffffff; /* Text and white color */
+    --muted-text: #a1a1a1; /* Muted text color */
+  }
+  
+  /* Global Styles */
+  body {
+    background-color: var(--primary-bg);
+    font-family: 'Arial', sans-serif;
+    color: var(--light-color);
+    margin: 0;
+  }
+  
+  h1, p {
+    margin: 0;
+  }
+  
+  a {
+    color: var(--primary-color);
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Form Styling */
+  .form-control {
+    background-color: var(--secondary-bg);
+    color: var(--light-color);
+    border: none;
+    padding: 1rem;
+    font-size: 1rem;
+  }
+  
+  .form-control:focus {
+    outline: none;
+    box-shadow: none;
+    border: none;
+  }
+  
+  .input-group-text {
+    background-color: var(--secondary-bg);
+    color: var(--light-color);
+    border: none;
+  }
+  
+  /* Buttons */
+  .btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    font-size: 1rem;
+  }
+  
+  .btn-primary:hover {
+    background-color: darken(var(--primary-color), 5%);
+  }
+  
+  .btn-secondary {
+    background-color: var(--secondary-bg);
+    color: var(--light-color);
+    border: none;
+  }
+  
+  .btn-secondary:hover {
+    background-color: lighten(var(--secondary-bg), 10%);
+  }
+  
+  /* Right Section */
+  .bg-primary {
+    background-color: var(--primary-color) !important;
+  }
+  
+  .illustration img {
+    max-width: 100%;
+    height: auto;
+  }
+  

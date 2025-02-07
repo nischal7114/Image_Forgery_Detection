@@ -1,0 +1,55 @@
+{% extends "case_app/base.html" %}
+
+{% block title %}Create Case{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="text-center bg-primary text-white py-4 rounded shadow-sm">
+        <h1><i class="bi bi-folder-plus"></i> Create a New Case</h1>
+        <p>Fill in the details to create a new case.</p>
+    </div>
+
+    <div class="mt-4 bg-white p-4 rounded shadow-sm">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="name" class="form-label">Case Name</label>
+                <input 
+                    type="text" 
+                    name="name" 
+                    id="name" 
+                    class="form-control" 
+                    placeholder="Enter the case name" 
+                    value="{{ form.name.value|default:'' }}" 
+                    required
+                >
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea 
+                    name="description" 
+                    id="description" 
+                    class="form-control" 
+                    rows="4" 
+                    placeholder="Enter a brief description of the case"
+                >{{ form.description.value|default:'' }}</textarea>
+            </div>
+            <div class="mb-3">
+                <label for="tampering_threshold" class="form-label">Tampering Threshold</label>
+                <input 
+                    type="number" 
+                    name="tampering_threshold" 
+                    id="tampering_threshold" 
+                    class="form-control" 
+                    placeholder="Enter tampering threshold (default: 5)" 
+                    value="{{ form.tampering_threshold.value|default:'5' }}" 
+                    min="1"
+                >
+            </div>
+            <button type="submit" class="btn btn-success btn-lg">
+                <i class="bi bi-check-circle"></i> Create Case
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

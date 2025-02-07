@@ -1,0 +1,17 @@
+{% extends "case_app/base.html" %}
+
+{% block title %}Edit Case{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="bg-white shadow-sm rounded p-4">
+        <h2>Edit Case</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a href="{% url 'case_app:case_details' case.id %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

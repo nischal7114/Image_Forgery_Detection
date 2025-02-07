@@ -1,0 +1,16 @@
+{% extends "case_app/base.html" %}
+
+{% block content %}
+<div class="container mx-auto p-5">
+    <h1 class="text-3xl font-bold text-red-600 mb-4">Delete Case</h1>
+    
+    <p class="text-lg">Are you sure you want to delete the case "<strong>{{ case.name }}</strong>"?</p>
+    <p class="text-gray-600">This action is irreversible and will remove all associated images and logs.</p>
+
+    <form method="POST" class="mt-4">
+        {% csrf_token %}
+        <button type="submit" class="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700">Confirm Delete</button>
+        <a href="{% url 'case_app:case_details' case.id %}" class="ml-4 text-blue-500 hover:underline">Cancel</a>
+    </form>
+</div>
+{% endblock %}
